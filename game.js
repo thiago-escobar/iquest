@@ -18,4 +18,8 @@ const config = {
 const game = new Phaser.Game(config);
 
 // Cria e registra o gerenciador de estado global no Registry do Phaser.
-game.registry.set('gameState', new GameStateManager());
+// É uma boa prática fazer isso no evento 'ready' para garantir que todos os sistemas do Phaser
+// estejam inicializados antes de registrar dados globais. Isso evita possíveis "race conditions".
+game.events.on('ready', () => {
+    game.registry.set('gameState', new GameStateManager());
+});
