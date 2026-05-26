@@ -101,6 +101,5 @@ class MapScene extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
             this.scene.start('PartyMenuScene');
         }
-        console.log(`Player position: (${this.player.x.toFixed(2)}, ${this.player.y.toFixed(2)})`);
     }
 }

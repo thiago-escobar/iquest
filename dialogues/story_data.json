@@ -1,0 +1,21 @@
+{
+    "1": {
+        "dialogue": [
+            { "character": "Amigo", "text": "Ei! Você finalmente chegou na cidade grande!" },
+            { "character": "Herói", "text": "Sim! Estou pronto para começar minha jornada como aventureiro!" },
+            { "character": "Amigo", "text": "Ótimo! Mas as coisas são um pouco... diferentes aqui. Você está pronto para a dura realidade?" },
+            {
+                "choices": [
+                    { "text": "Estou pronto para qualquer coisa!", "setsFlag": "isBrave", "nextProgress": 2 },
+                    { "text": "Estou um pouco nervoso, para ser honesto.", "setsFlag": "isHonest", "nextProgress": 2 }
+                ]
+            }
+        ]
+    },
+    "2": {
+        "dialogue": [
+            { "character": "Amigo", "text": "Bem-vindo de volta. Vi que você já andou pela cidade." },
+            { "character": "Amigo", "text": "Lembre-se do que conversamos. A vida de herói aqui não é fácil." }
+        ]
+    }
+}

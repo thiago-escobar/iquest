@@ -20,8 +20,22 @@ class GameStateManager {
 
         // Dinheiro do jogador.
         this.money = 0;
+
+        // Armazena as escolhas e eventos importantes da história.
+        // Ex: { isBrave: true, metKing: false }
+        this.storyFlags = {};
     }
 
     // Aqui você pode adicionar métodos para manipular o estado de forma segura.
     // Ex: advanceStory(), addPartyMember(member), etc.
+
+    /**
+     * Define ou atualiza uma flag no estado da história.
+     * @param {string} flag - O nome da flag a ser definida (ex: 'isBrave').
+     * @param {*} value - O valor da flag (geralmente true/false).
+     */
+    setStoryFlag(flag, value) {
+        this.storyFlags[flag] = value;
+        console.log(`Story flag set: ${flag} = ${value}`);
+    }
 }
