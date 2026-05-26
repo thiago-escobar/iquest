@@ -146,12 +146,17 @@ class StoryScene extends Phaser.Scene {
         // Armazena o próximo progresso para ser aplicado quando este bloco de diálogo terminar
         this.pendingNextProgress = choice.nextProgress;
 
-        // Reativa o clique na tela para avançar o diálogo
-        this.input.on('pointerdown', () => this.displayNextLine());
-
         // Exibe a primeira linha da nova fila de diálogo.
         // Se a nova fila estiver vazia, a verificação no início de displayNextLine() encerrará a cena.
         this.displayNextLine();
+
+        // Reativa o clique na tela no próximo frame para evitar que o clique da escolha
+        // avance o diálogo de resposta imediatamente.
+        this.time.delayedCall(10, () => {
+            if (this.scene.isActive()) { // Garante que a cena ainda existe
+                this.input.on('pointerdown', () => this.displayNextLine());
+            }
+        });
     }
 
     endScene() {
