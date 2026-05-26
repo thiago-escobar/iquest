@@ -5,11 +5,11 @@ class MainMenuScene extends Phaser.Scene {
 
     create() {
         // Adiciona o texto do título
-        this.add.text(400, 160, 'iQuest: Aventureiros Proletários', { 
+        /*this.add.text(400, 160, 'iQuest: Aventureiros Proletários', { 
             fontSize: '32px', 
             fill: '#fff',
             fontStyle: 'bold'
-        }).setOrigin(0.5);
+        }).setOrigin(0.5);*/
 
         // Adiciona o botão "Começo"
         const startButton = this.add.text(400, 300, 'Começo', { 

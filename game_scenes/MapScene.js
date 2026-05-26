@@ -20,25 +20,25 @@ class MapScene extends Phaser.Scene {
 
         // --- Criação dos locais interativos ---
         // Casa da História (Visual Novel)
-        this.createLocation(150, 200, 120, 100, 0x8B4513, 'Casa', 'StoryScene');
+        this.createLocation(150, 200, 120, 100, 0x8B4513, 'Conversa', 'StoryScene');
 
         // Loja (ShopScene)
         this.createLocation(350, 200, 120, 100, 0xD2691E, 'Loja', 'ShopScene');
 
         // Arena de Combate (CombatScene)
-        this.createLocation(550, 200, 120, 100, 0xA9A9A9, 'Arena', 'CombatScene');
-
-        // Menu do Grupo / Casa do Jogador (PartyMenuScene)
-        this.createLocation(250, 400, 120, 100, 0x6B8E23, 'Sua Casa', 'PartyMenuScene');
+        this.createLocation(550, 200, 120, 100, 0xA9A9A9, 'Combate', 'CombatScene');
 
         // App de Trabalho / Agência (GigAppScene)
-        this.createLocation(450, 400, 120, 100, 0x4682B4, 'Agência', 'GigAppScene');
+        this.createLocation(450, 400, 120, 100, 0x4682B4, 'Trabalhos', 'GigAppScene');
 
         // --- Configuração de Controles e Colisões ---
 
         // Adiciona um "overlap" (sobreposição) entre o jogador e os locais
         this.physics.add.overlap(this.player, this.locations, this.onLocationOverlap, null, this);
         this.cursors = this.input.keyboard.createCursorKeys();
+
+        // Adiciona a tecla de espaço para abrir o menu
+        this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
 
     /**
@@ -86,9 +86,21 @@ class MapScene extends Phaser.Scene {
         this.player.body.setVelocity(0);
 
         // Define a velocidade com base nas teclas de seta pressionadas
-        if (this.cursors.left.isDown) { this.player.body.setVelocityX(-this.playerSpeed); }
-        else if (this.cursors.right.isDown) { this.player.body.setVelocityX(this.playerSpeed); }
-        if (this.cursors.up.isDown) { this.player.body.setVelocityY(-this.playerSpeed); }
-        else if (this.cursors.down.isDown) { this.player.body.setVelocityY(this.playerSpeed); }
+        if (this.cursors.left.isDown) {
+            this.player.body.setVelocityX(-this.playerSpeed);
+        } else if (this.cursors.right.isDown) {
+            this.player.body.setVelocityX(this.playerSpeed);
+        }
+
+        if (this.cursors.up.isDown) {
+            this.player.body.setVelocityY(-this.playerSpeed);
+        } else if (this.cursors.down.isDown) {
+            this.player.body.setVelocityY(this.playerSpeed);
+        }
+        // Verifica se a tecla de espaço foi pressionada para abrir o menu do grupo
+        if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
+            this.scene.start('PartyMenuScene');
+        }
+        console.log(`Player position: (${this.player.x.toFixed(2)}, ${this.player.y.toFixed(2)})`);
     }
 }

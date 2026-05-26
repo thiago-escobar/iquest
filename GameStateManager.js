@@ -19,7 +19,7 @@ class GameStateManager {
         this.inventory = [];
 
         // Dinheiro do jogador.
-        this.money = 50;
+        this.money = 0;
     }
 
     // Aqui você pode adicionar métodos para manipular o estado de forma segura.

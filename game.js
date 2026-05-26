@@ -9,7 +9,7 @@ const config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 300 },
+            gravity: { y: 0 }, // Gravidade desativada para um jogo top-down
             debug: false
         }
     }
