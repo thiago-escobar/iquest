@@ -6,10 +6,25 @@
             { "character": "Amigo", "text": "Ótimo! Mas as coisas são um pouco... diferentes aqui. Você está pronto para a dura realidade?" },
             {
                 "choices": [
-                    { "text": "Estou pronto para qualquer coisa!", "setsFlag": "isBrave", "nextProgress": 2 },
-                    { "text": "Estou um pouco nervoso, para ser honesto.", "setsFlag": "isHonest", "nextProgress": 2 }
+                    {
+                        "text": "Estou pronto para qualquer coisa!",
+                        "setsFlag": "isBrave",
+                        "nextProgress": 2,
+                        "response": [
+                            { "character": "Amigo", "text": "Essa é a atitude! Gostei de ver. Um verdadeiro herói não teme o desconhecido." }
+                        ]
+                    },
+                    {
+                        "text": "Estou um pouco nervoso, para ser honesto.",
+                        "setsFlag": "isHonest",
+                        "nextProgress": 2,
+                        "response": [
+                            { "character": "Amigo", "text": "É normal sentir isso. A honestidade é uma virtude rara. Mantenha isso." }
+                        ]
+                    }
                 ]
-            }
+            },
+            {"character": "Amigo", "text": "Agora ande pela cidade, explore, conheça as pessoas. Mas lembre-se, nem tudo é o que parece aqui. Cuidado com quem você confia." }
         ]
     },
     "2": {

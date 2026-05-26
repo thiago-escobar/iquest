@@ -10,6 +10,9 @@ class StoryScene extends Phaser.Scene {
     init() {
         // Pega o gerenciador de estado global que foi registrado em game.js
         this.gameState = this.game.registry.get('gameState');
+        // Inicializa/reseta variáveis de controle da cena
+        this.choiceObjects = [];
+        this.pendingNextProgress = null;
     }
 
     create() {
@@ -49,10 +52,14 @@ class StoryScene extends Phaser.Scene {
     displayNextLine() {
         // Se já exibimos todas as linhas, encerra a cena.
         if (this.dialogueIndex >= this.dialogueLines.length) {
+            // Se houver um progresso pendente (de uma escolha com resposta), aplique-o agora.
+            if (this.pendingNextProgress) {
+                this.gameState.storyProgress = this.pendingNextProgress;
+                this.pendingNextProgress = null; // Limpa para a próxima vez
+            }
             this.endScene();
             return;
         }
-
         const currentLine = this.dialogueLines[this.dialogueIndex];
 
         // Verifica se a linha atual é um ponto de escolha
@@ -76,6 +83,7 @@ class StoryScene extends Phaser.Scene {
         this.dialogueText.setText('Faça sua escolha...');
         this.nameText.setText('');
 
+        this.choiceObjects = []; // Limpa referências de escolhas anteriores
         let choiceY = 200;
         choices.forEach(choice => {
             const choiceText = this.add.text(400, choiceY, `> ${choice.text}`, {
@@ -94,8 +102,17 @@ class StoryScene extends Phaser.Scene {
                 this.handleChoice(choice);
             });
 
+            this.choiceObjects.push(choiceText); // Armazena para poder limpar depois
             choiceY += 60;
         });
+    }
+
+    /**
+     * Remove os objetos de texto das escolhas da tela.
+     */
+    clearChoices() {
+        this.choiceObjects.forEach(choice => choice.destroy());
+        this.choiceObjects = [];
     }
 
     /**
@@ -107,11 +124,34 @@ class StoryScene extends Phaser.Scene {
         if (choice.setsFlag) {
             this.gameState.setStoryFlag(choice.setsFlag, true);
         }
-        // Atualiza o progresso da história para o próximo passo
-        if (choice.nextProgress) {
-            this.gameState.storyProgress = choice.nextProgress;
+
+        // Remove os botões de escolha da tela
+        this.clearChoices();
+
+        // Pega o resto do diálogo que viria depois do bloco de escolhas
+        const remainingDialogue = this.dialogueLines.slice(this.dialogueIndex + 1);
+
+        // Verifica se há uma resposta imediata para a escolha
+        if (choice.response && choice.response.length > 0) {
+            // Combina a resposta da escolha com o resto do diálogo original
+            this.dialogueLines = [...choice.response, ...remainingDialogue];
+        } else {
+            // Se não houver resposta, apenas continua com o resto do diálogo
+            this.dialogueLines = remainingDialogue;
         }
-        this.endScene();
+
+        // Reseta o índice para o início da nova fila de diálogo (seja a resposta ou o que vem depois)
+        this.dialogueIndex = 0;
+
+        // Armazena o próximo progresso para ser aplicado quando este bloco de diálogo terminar
+        this.pendingNextProgress = choice.nextProgress;
+
+        // Reativa o clique na tela para avançar o diálogo
+        this.input.on('pointerdown', () => this.displayNextLine());
+
+        // Exibe a primeira linha da nova fila de diálogo.
+        // Se a nova fila estiver vazia, a verificação no início de displayNextLine() encerrará a cena.
+        this.displayNextLine();
     }
 
     endScene() {
