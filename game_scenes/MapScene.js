@@ -19,8 +19,8 @@ class MapScene extends Phaser.Scene {
         this.locations = this.physics.add.staticGroup();
 
         // --- Criação dos locais interativos ---
-        // Casa da História (Visual Novel)
-        this.createLocation(150, 200, 120, 100, 0x8B4513, 'Conversa', 'StoryScene');
+        // Casa da História (Visual Novel com o NPC 'Amigo')
+        this.createLocation(150, 200, 120, 100, 0x8B4513, 'Conversa', 'StoryScene', { dialogueFile: 'amigo_dialogue.json', npcId: 'Amigo' });
 
         // Loja (ShopScene)
         this.createLocation(350, 200, 120, 100, 0xD2691E, 'Loja', 'ShopScene');
@@ -50,8 +50,9 @@ class MapScene extends Phaser.Scene {
      * @param {number} color - Cor do retângulo do local.
      * @param {string} label - Texto a ser exibido no local.
      * @param {string} sceneKey - A chave da cena para a qual navegar.
+     * @param {object} sceneData - Dados a serem passados para a cena (via init).
      */
-    createLocation(x, y, width, height, color, label, sceneKey) {
+    createLocation(x, y, width, height, color, label, sceneKey, sceneData = {}) {
         // Cria o retângulo do local e o adiciona ao grupo de física
         const location = this.add.rectangle(x, y, width, height, color);
         this.locations.add(location);
@@ -59,8 +60,9 @@ class MapScene extends Phaser.Scene {
         // Adiciona uma borda para destaque visual
         location.setStrokeStyle(2, 0xffffff);
 
-        // Armazena a chave da cena no próprio objeto do local para uso posterior
+        // Armazena a chave da cena e os dados no próprio objeto do local
         location.setData('sceneKey', sceneKey);
+        location.setData('sceneData', sceneData);
 
         // Adiciona o texto do rótulo sobre o local
         this.add.text(x, y, label, { fontSize: '20px', fill: '#fff' }).setOrigin(0.5);
@@ -76,9 +78,10 @@ class MapScene extends Phaser.Scene {
         player.body.stop();
         this.physics.pause();
 
-        // Obtém a chave da cena armazenada no local e inicia a nova cena
+        // Obtém a chave da cena e os dados armazenados no local e inicia a nova cena
         const sceneKey = location.getData('sceneKey');
-        this.scene.start(sceneKey);
+        const sceneData = location.getData('sceneData');
+        this.scene.start(sceneKey, sceneData);
     }
 
     update() {

@@ -24,6 +24,10 @@ class GameStateManager {
         // Armazena as escolhas e eventos importantes da história.
         // Ex: { isBrave: true, metKing: false }
         this.storyFlags = {};
+
+        // Armazena o nível de relacionamento com cada NPC.
+        // Ex: { Amigo: 10, Comerciante: 0 }
+        this.npcRelationships = {};
     }
 
     // Aqui você pode adicionar métodos para manipular o estado de forma segura.
@@ -37,5 +41,18 @@ class GameStateManager {
     setStoryFlag(flag, value) {
         this.storyFlags[flag] = value;
         console.log(`Story flag set: ${flag} = ${value}`);
+    }
+
+    /**
+     * Atualiza o nível de relacionamento com um NPC.
+     * @param {string} npcId - O identificador único do NPC (ex: 'Amigo').
+     * @param {number} value - O valor a ser adicionado (pode ser positivo ou negativo).
+     */
+    updateRelationship(npcId, value) {
+        if (this.npcRelationships[npcId] === undefined) {
+            this.npcRelationships[npcId] = 0;
+        }
+        this.npcRelationships[npcId] += value;
+        console.log(`Relacionamento com ${npcId} atualizado para: ${this.npcRelationships[npcId]}`);
     }
 }

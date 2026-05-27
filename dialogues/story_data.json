@@ -1,14 +1,15 @@
 {
     "1": {
         "dialogue": [
-            { "character": "Amigo", "text": "Ei! Você finalmente chegou na cidade grande!" },
-            { "character": "Herói", "text": "Sim! Estou pronto para começar minha jornada como aventureiro!" },
-            { "character": "Amigo", "text": "Ótimo! Mas as coisas são um pouco... diferentes aqui. Você está pronto para a dura realidade?" },
+            { "character": "Amigo", "text": "Ei! Você finalmente chegou na cidade grande!", "portrait": "amigo_feliz", "position": "left" },
+            { "character": "Herói", "text": "Sim! Estou pronto para começar minha jornada como aventureiro!", "portrait": "heroi_determinado", "position": "right" },
+            { "character": "Amigo", "text": "Ótimo! Mas as coisas são um pouco... diferentes aqui. Você está pronto para a dura realidade?", "portrait": "amigo_serio", "position": "left" },
             {
                 "choices": [
                     {
                         "text": "Estou pronto para qualquer coisa!",
                         "setsFlag": "isBrave",
+                        "relationshipChange": 1,
                         "nextProgress": 2,
                         "response": [
                             { "character": "Amigo", "text": "Essa é a atitude! Gostei de ver. Um verdadeiro herói não teme o desconhecido." }
@@ -17,20 +18,57 @@
                     {
                         "text": "Estou um pouco nervoso, para ser honesto.",
                         "setsFlag": "isHonest",
+                        "relationshipChange": 1,
                         "nextProgress": 2,
                         "response": [
                             { "character": "Amigo", "text": "É normal sentir isso. A honestidade é uma virtude rara. Mantenha isso." }
                         ]
                     }
                 ]
-            },
-            {"character": "Amigo", "text": "Agora ande pela cidade, explore, conheça as pessoas. Mas lembre-se, nem tudo é o que parece aqui. Cuidado com quem você confia." }
+            }
         ]
     },
     "2": {
+        "nextProgress": 3,
         "dialogue": [
-            { "character": "Amigo", "text": "Bem-vindo de volta. Vi que você já andou pela cidade." },
-            { "character": "Amigo", "text": "Lembre-se do que conversamos. A vida de herói aqui não é fácil." }
+            { "character": "Amigo", "text": "Bem-vindo de volta. Vi que você já andou pela cidade.", "portrait": "amigo_neutro", "position": "left" },
+            { "character": "Amigo", "text": "Gostei da sua atitude corajosa de antes!", "requiresFlag": "isBrave", "portrait": "amigo_sorrindo", "position": "left" },
+            { "character": "Amigo", "text": "Ainda bem que você foi honesto sobre seus sentimentos.", "requiresFlag": "isHonest", "portrait": "amigo_sorrindo", "position": "left" },
+            { "character": "Amigo", "text": "Lembre-se do que conversamos. A vida de herói aqui não é fácil.", "portrait": "amigo_serio", "position": "left" }
+        ]
+    },
+    "3": {
+        "dialogue": [
+            { "character": "Amigo", "text": "Falando em trabalho, um comerciante local precisa de ajuda. Parece perigoso.", "portrait": "amigo_serio", "position": "left" },
+            { "character": "Amigo", "text": "O que você acha?", "portrait": "amigo_questionando", "position": "left" },
+            {
+                "choices": [
+                    {
+                        "text": "Perigo é meu sobrenome! Eu topo!",
+                        "requiresFlag": "isBrave",
+                        "relationshipChange": 1,
+                        "nextProgress": 4,
+                        "response": [
+                            { "character": "Amigo", "text": "Sabia que você diria isso! Fale com ele na loja.", "portrait": "amigo_feliz", "position": "left" }
+                        ]
+                    },
+                    {
+                        "text": "Vou pensar. Preciso de mais detalhes.",
+                        "nextProgress": 4,
+                        "response": [
+                            { "character": "Amigo", "text": "Certo. Prudência é importante. Fale com ele na loja quando estiver pronto." }
+                        ]
+                    },
+                    {
+                        "text": "Não sei... Parece arriscado demais.",
+                        "relationshipChange": -1,
+                        "nextProgress": 4,
+                        "response": [
+                            { "character": "Amigo", "text": "Entendo. Bom, sempre há outros trabalhos mais seguros.", "portrait": "amigo_preocupado", "position": "left" }
+                        ]
+                    }
+                ]
+            }
         ]
     }
 }
