@@ -48,6 +48,10 @@ class StoryScene extends Phaser.Scene {
             return;
         }
 
+        // --- Criação do Fundo ---
+        this.background = this.add.image(400, 300, '').setDepth(-1);
+        this.background.setDisplaySize(this.cameras.main.width, this.cameras.main.height);
+
         this.dialogueIndex = 0;
         this.dialogueLines = this.dialogueData.dialogue;
 
@@ -112,6 +116,11 @@ class StoryScene extends Phaser.Scene {
             return;
         }
         const currentLine = this.dialogueLines[this.dialogueIndex];
+
+        // Se a linha atual define um novo fundo, atualiza-o.
+        if (currentLine.setBackground) {
+            this.updateBackground(currentLine.setBackground);
+        }
 
         // Se a linha atual requer uma flag e o jogador não a possui, pule para a próxima linha.
         if (currentLine.requiresFlag && !this.gameState.storyFlags[currentLine.requiresFlag]) {
@@ -216,6 +225,29 @@ class StoryScene extends Phaser.Scene {
     clearChoices() {
         this.choiceObjects.forEach(choice => choice.destroy());
         this.choiceObjects = [];
+    }
+
+    /**
+     * Atualiza a imagem de fundo da cena, usando um placeholder colorido se a imagem não existir.
+     * @param {string} bgKey - A chave da textura do novo fundo.
+     */
+    updateBackground(bgKey) {
+        // Gera uma textura de placeholder colorida se ela ainda não existir.
+        if (!this.textures.exists(bgKey)) {
+            // Usa um hash do nome da imagem para gerar uma cor consistente.
+            let h = 0;
+            for (let i = 0; i < bgKey.length; i++) {
+                h = (h << 5) - h + bgKey.charCodeAt(i);
+                h |= 0; // Converte para inteiro de 32bit
+            }
+            // Gera uma cor mais escura para o fundo para não ofuscar o texto e os retratos.
+            const r = (h & 0xFF0000) >> 16;
+            const g = (h & 0x00FF00) >> 8;
+            const b = h & 0x0000FF;
+            const darkColorHex = Phaser.Display.Color.RGBToString(r * 0.5, g * 0.5, b * 0.5).substring(1);
+            this.textures.generate(bgKey, { data: [darkColorHex], pixelWidth: 1 });
+        }
+        this.background.setTexture(bgKey);
     }
 
     /**

@@ -1,9 +1,9 @@
 {
     "1": {
         "dialogue": [
-            { "character": "Amigo", "text": "Ei! Você finalmente chegou na cidade grande!", "portrait": "amigo_feliz", "position": "left" },
+            { "character": "Amigo", "text": "Ei! Você finalmente chegou na cidade grande!", "portrait": "amigo_feliz", "position": "left", "setBackground": "cidade_dia" },
             { "character": "Herói", "text": "Sim! Estou pronto para começar minha jornada como aventureiro!", "portrait": "heroi_determinado", "position": "right" },
-            { "character": "Amigo", "text": "Ótimo! Mas as coisas são um pouco... diferentes aqui. Você está pronto para a dura realidade?", "portrait": "amigo_serio", "position": "left" },
+            { "character": "Amigo", "text": "Ótimo! Mas as coisas são um pouco... diferentes aqui. Você está pronto para a dura realidade?", "portrait": "amigo_serio", "position": "left", "setBackground": "cidade_beco" },
             {
                 "choices": [
                     {
@@ -12,7 +12,7 @@
                         "relationshipChange": 1,
                         "nextProgress": 2,
                         "response": [
-                            { "character": "Amigo", "text": "Essa é a atitude! Gostei de ver. Um verdadeiro herói não teme o desconhecido." }
+                            { "character": "Amigo", "text": "Essa é a atitude! Gostei de ver. Um verdadeiro herói não teme o desconhecido.", "portrait": "amigo_feliz", "position": "left" }
                         ]
                     },
                     {
@@ -64,7 +64,7 @@
                         "relationshipChange": -1,
                         "nextProgress": 4,
                         "response": [
-                            { "character": "Amigo", "text": "Entendo. Bom, sempre há outros trabalhos mais seguros.", "portrait": "amigo_preocupado", "position": "left" }
+                            { "character": "Amigo", "text": "Entendo. Bom, sempre há outros trabalhos mais seguros.", "portrait": "amigo_preocupado", "position": "left", "setBackground": "taverna_escura" }
                         ]
                     }
                 ]
