@@ -20,7 +20,7 @@ class MapScene extends Phaser.Scene {
 
         // --- Criação dos locais interativos ---
         // Casa da História (Visual Novel com o NPC 'Amigo')
-        this.createLocation(150, 200, 120, 100, 0x8B4513, 'Conversa', 'StoryScene', { dialogueFile: 'amigo_dialogue.json', npcId: 'Amigo' });
+        this.createLocation(150, 200, 120, 100, 0x8B4513, 'Conversa', 'StoryScene', { dialogueFile: 'story_data.json', npcId: 'Amigo' });
 
         // Loja (ShopScene)
         this.createLocation(350, 200, 120, 100, 0xD2691E, 'Loja', 'ShopScene');
